@@ -1,0 +1,12 @@
+.navbar {
+  background-color: #1dbb6f;
+  font-size: 18px;
+}
+
+.navbar-brand {
+  font-size: 30px;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
