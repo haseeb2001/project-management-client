@@ -1,38 +1,184 @@
-.App {
+* {
+  font-family: 'Arapey';
+}
+
+.margin-right-5 {
+  margin-right: 5px;
+}
+
+.margin-left-5 {
+  margin-left: 5px;
+}
+
+.margin-right-20 {
+  margin-right: 20px;
+}
+
+.margin-right-100 {
+  margin-right: 100px;
+}
+
+.margin-bottom-50 {
+  margin-bottom: 50px;
+}
+
+.page-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.bg-color-green {
+  background-color: #1dbb6f;
+  border: transparent;
+}
+
+.table-text {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.table-navigators {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.spinner {
+  width: 5rem;
+  height: 5rem;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.margin-bottom-3 {
+  margin-bottom: 20px;
+}
+
+.login-background {
+  background-color: rgb(148, 148, 148);
+}
+
+.register-background {
+  background-color: rgb(196, 196, 196);
+}
+
+.z-index-1 {
+  z-index: 1;
+}
+
+.z-index-2 {
+  z-index: 2;
+}
+
+.z-index-3 {
+  z-index: 3;
+}
+
+.opacity-8 {
+  opacity: 0.8;
+}
+
+.object-fit-fill {
+  object-fit: fill;
+  width: 100%;
+  height: 100%;
+}
+
+.auth-switch-container {
+  background-color: rgb(140, 0, 14);
+  transform: rotate(-90deg);
+}
+
+input:focus {
+  outline: none;
+}
+
+.selected-expand {
+  padding: 2px;
+}
+
+.bg-gray {
+  background-color: rgb(216, 215, 215);
+}
+.bg-light-grey {
+  background-color: rgb(246, 245, 245);
+}
+.btn-green {
+  background-color: #1dbb6f;
+}
+
+.btn-green:hover {
+  background-color: #038e4b;
+}
+
+.text-green {
+  color: #1dbb6f;
+}
+
+.earning-details-table th,
+.earning-details-table td {
+  width: 50%;
+  text-align: center;
+  padding: 10px 0px;
+}
+
+.earning-details-table tr {
+  display: flex;
+  justify-content: center;
+}
+
+.w-20 {
+  width: 20%;
+}
+
+.w-80 {
+  width: 80%;
+}
+
+.bg-light-red {
+  background-color: rgb(255, 55, 55);
+}
+
+.custom-link {
+  color: black;
+  text-decoration: none;
+}
+
+.bg-light-red {
+  background-color: rgb(253, 53, 53);
+}
+.bg-light-red:hover {
+  background-color: rgb(206, 0, 0);
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.create-profile-button {
+  text-decoration: none;
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.create-profile-button:hover {
+  text-decoration: none;
+  color: white;
+  background-color: #038e4b;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.create-profile-container {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
 }
