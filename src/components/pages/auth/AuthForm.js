@@ -1,7 +1,5 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { faEnvelope, faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AuthSchema, RegisterScehma } from '../../../utils/yup/schemas';
@@ -9,11 +7,6 @@ import { login, signup } from '../../../store/userSlice';
 
 const AuthForm = ({ type }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { authSuccess, authErrors } = useSelector((state) => state.user);
-  // useEffect(() => {
-  //   if (authSuccess) navigate('/');
-  // }, [authSuccess, authErrors]);
 
   const onSubmit = (creds, { setSubmitting, resetForm }) => {
     type === 'LOGIN' ? dispatch(login(creds)) : dispatch(signup(creds));
