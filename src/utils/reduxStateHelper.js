@@ -11,7 +11,6 @@ export const authStateHelper = (state, response, auth = true) => {
     state.authSuccess = false;
     state.status = STATUSES.ERROR;
     state.errors = response?.errors;
-    console.log(response);
     if (auth) Cookies.set('token', '');
   }
 };
@@ -23,21 +22,75 @@ export const rejectStateHelper = (state) => {
 
 export const modifyStateHelper = (state, response) => {
   if (!response?.errors) {
-    state.data = null;
+    state.data = [];
   } else {
     state.status = STATUSES.ERROR;
     state.errors = response?.errors;
   }
 };
 
-export const fetchStateHelper = (state, response) => {
+export const updateStateHelper = (state, response, fieldName, stateName) => {
   if (!response?.errors) {
-    state.data = response?.data;
-    state.errors = []
-    state.status = STATUSES.IDLE;
+    const existingData = state.data[stateName] || [];
+    const newData = response?.data?.[fieldName];
+    const indexToUpdate = existingData.findIndex(
+      (item) => item._id === newData?._id
+    );
+    const updatedData =
+      indexToUpdate !== -1
+        ? [
+            ...existingData.slice(0, indexToUpdate),
+            newData,
+            ...existingData.slice(indexToUpdate + 1),
+          ]
+        : [...existingData, newData];
+    const newState = {
+      ...state,
+      data: {
+        ...state.data,
+        [stateName]: updatedData,
+      },
+      errors: [],
+      status: STATUSES.IDLE,
+    };
+    return newState;
   } else {
-    state.status = STATUSES.ERROR;
-    state.data = [];
-    state.errors = response?.errors;
+    return {
+      ...state,
+      data: [],
+      errors: response?.errors,
+      status: STATUSES.ERROR,
+    };
+  }
+};
+
+export const fetchStateHelper = (state, response, fieldName) => {
+  if (!response?.errors) {
+    const existingData = state.data[fieldName] || [];
+    const newData = response?.data?.[fieldName] || [];
+
+    const filteredData = newData.filter(
+      (newItem) =>
+        !existingData.some((existingItem) => existingItem._id === newItem._id)
+    );
+
+    const updatedData = existingData.concat(filteredData);
+    const newState = {
+      ...state,
+      data: {
+        ...state.data,
+        [fieldName]: updatedData,
+      },
+      errors: [],
+      status: STATUSES.IDLE,
+    };
+    return newState;
+  } else {
+    return {
+      ...state,
+      data: [],
+      errors: response?.errors,
+      status: STATUSES.ERROR,
+    };
   }
 };

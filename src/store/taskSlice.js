@@ -48,7 +48,6 @@ export const fetchProjectTasks = createAsyncThunk(
 export const createTask = createAsyncThunk(
   'task/createTask',
   async ({ newData }) => {
-    console.log(newData);
     const token = getCookie('token');
     const res = await fetch(`${process.env.REACT_APP_BASE_URL}/tasks/`, {
       method: 'POST',
@@ -66,8 +65,6 @@ export const createTask = createAsyncThunk(
 export const updateTask = createAsyncThunk(
   'task/updateTask',
   async ({ id, newData }) => {
-
-    console.log('in redux', newData)
     const token = getCookie('token');
     const res = await fetch(`${process.env.REACT_APP_BASE_URL}/tasks/${id}`, {
       method: 'POST',
@@ -77,10 +74,8 @@ export const updateTask = createAsyncThunk(
       },
       body: JSON.stringify(newData),
     });
-    const data = await res.json()
 
-    console.log(data)
-    return data;
+    return await res.json();
   }
 );
 

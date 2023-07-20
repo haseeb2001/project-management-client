@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { STATUSES } from '../constants/statuses';
 import Cookies from 'js-cookie';
+import { getCookie } from '../utils/cookie';
 import { authStateHelper, rejectStateHelper } from '../utils/reduxStateHelper';
 const initialState = {
   data: [],
@@ -31,7 +32,7 @@ const userSlice = createSlice({
     builder
       .addCase(login.pending, (state) => {
         state.status = STATUSES.LOADING;
-        state.errors = []
+        state.errors = [];
       })
       .addCase(login.fulfilled, (state, action) => {
         authStateHelper(state, action.payload);
@@ -48,6 +49,15 @@ const userSlice = createSlice({
       .addCase(signup.rejected, (state, action) => {
         rejectStateHelper(state);
       })
+      .addCase(fetchUser.pending, (state) => {
+        state.status = STATUSES.LOADING;
+      })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        authStateHelper(state, action.payload, false);
+      })
+      .addCase(fetchUser.rejected, (state, action) => {
+        rejectStateHelper(state);
+      });
   },
 });
 
@@ -72,6 +82,18 @@ export const signup = createAsyncThunk('user/signup', async (creds) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(creds),
+  });
+  return await res.json();
+});
+
+export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
+  const token = getCookie('token');
+  const res = await fetch(`${process.env.REACT_APP_BASE_URL}/auth/fetchUser`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
   });
   return await res.json();
 });
