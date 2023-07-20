@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import Select from 'react-select';
 import axios from 'axios';
+import md5 from 'md5';
 import { Button, Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { createCollab } from '../../../store/collabSlice';
@@ -14,8 +15,6 @@ const UserDropdown = ({ field, form, projectId }) => {
     data: { collabs },
   } = useSelector((state) => state.collab);
 
-  console.log(collabs);
-
   const [options, setOptions] = useState([]);
   useEffect(() => {
     axios
@@ -26,12 +25,25 @@ const UserDropdown = ({ field, form, projectId }) => {
           const filteredUsers = users.filter(
             (user) =>
               !collabs.some(
-                (existingItem) => existingItem?.userId?._id === user._id
+                (existingItem) =>
+                  existingItem?.userId?._id === user._id &&
+                  existingItem?.projectId === projectId
               )
           );
           const userOptions = filteredUsers.map((user) => ({
             value: user._id,
-            label: user.username,
+            label: (
+              <div className='flex items-center'>
+                <img
+                  src={`https://www.gravatar.com/avatar/${md5(
+                    user._id
+                  )}?d=identicon&s=40`} // Adjust 's' parameter to control size
+                  alt='Avatar'
+                  className='w-6 h-6 rounded-full me-3' // Adjust width and height here
+                />
+                {user.username}
+              </div>
+            ),
           }));
 
           setOptions(userOptions);
@@ -40,7 +52,7 @@ const UserDropdown = ({ field, form, projectId }) => {
       .catch((error) => {
         console.error('Error fetching users:', error);
       });
-  }, [collabs]);
+  }, [collabs, projectId]);
 
   return (
     <Select
@@ -61,7 +73,9 @@ export const AddCollabs = ({ handleCloseModal, projectId }) => {
   const dispatch = useDispatch();
   const handleSubmit = ({ selectedOptions }) => {
     selectedOptions.map((option) =>
-      dispatch(createCollab({ newData: { collaboratorId: option.value, projectId } }))
+      dispatch(
+        createCollab({ newData: { collaboratorId: option.value, projectId } })
+      )
     );
   };
 
