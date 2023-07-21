@@ -3,3 +3,10 @@ export const STATUSES = Object.freeze({
   ERROR: 'error',
   LOADING: 'loading',
 });
+
+export const projectStatuses = [
+  'Created',
+  'Assigned',
+  'In Progress',
+  'Completed',
+];

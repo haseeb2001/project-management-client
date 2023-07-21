@@ -19,3 +19,11 @@ export const AuthSchema = Yup.object().shape({
     .max(20, 'Too Long!')
     .required('Password required'),
 });
+
+export const taskSchema = Yup.object().shape({
+  title: Yup.string()
+    .min(2, 'Too Short!')
+    .max(20, 'Too Long!')
+    .required('Title required'),
+  dueDate: Yup.date().required('Due date required'),
+});
