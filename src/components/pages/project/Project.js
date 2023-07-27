@@ -1,4 +1,4 @@
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
@@ -77,17 +77,17 @@ export const Project = () => {
             <strong>
               {memberCount} <FontAwesomeIcon icon={faUser} />
             </strong>
-          </div>
-        </div>
-        <div className='d-flex justify-content-end align-items-end mb-4'>
-          <div className='d-flex pe-3 fs-3'>
+            <div className='ms-2 pe-3 fs-3'>
             <Button
               className='fs-5 bg-black border-0'
               onClick={handleShowModal}
             >
-              AddMembers
+              <FontAwesomeIcon icon={faPlus} />
             </Button>
           </div>
+          </div>
+        </div>
+        <div className='d-flex justify-content-end align-items-end mb-4'>
           <div className='d-flex pe-3 fs-3'>
             <Button
               className='fs-5 bg-black border-0'
