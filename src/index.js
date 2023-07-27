@@ -5,7 +5,9 @@ import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store/store';
+import { fetchUser } from './store/userSlice';
 
+store.dispatch(fetchUser());
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>

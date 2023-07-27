@@ -10,7 +10,7 @@ const ProjectBoard = () => {
   const dispatch = useDispatch();
   const { data, status, errors } = useSelector((state) => state.task);
 
-  if (status === STATUSES.LOADING) {
+  if (status === STATUSES.LOADING && data.length === 0) {
     return (
       <div className='flex justify-content-center'>
         <AppSpinner />
@@ -22,35 +22,28 @@ const ProjectBoard = () => {
 
     if (taskIndex !== -1 && data.tasks[taskIndex].status !== newStatus) {
       const updatedTask = { ...data.tasks[taskIndex], status: newStatus };
-
       const updatedTasks = [...data.tasks];
       updatedTasks[taskIndex] = updatedTask;
-
-      console.log(id, newStatus);
-      console.log(updatedTask);
 
       dispatch(updateTask({ newData: updatedTask, id }));
     }
   };
 
   return (
-    <>
-      <DndProvider backend={HTML5Backend}>
-        {projectStatuses.map((status, index) => (
-          <div className='flex items-center' key={index}>
-            <div className='me-5 mb-3'>
-              <Column
-                key={index}
-                status={status}
-                cards={data?.tasks?.filter((task) => task.status === status)}
-                moveCard={moveCard}
-              />
-            </div>
-          </div>
-        ))}
-      </DndProvider>
-    </>
+    <DndProvider backend={HTML5Backend}>
+    <div className="d-flex flex-grow-1">
+      {projectStatuses.map((status, index) => (
+        <Column
+          key={index}
+          status={status}
+          cards={data?.tasks?.filter((task) => task.status === status)}
+          moveCard={moveCard}
+        />
+      ))}
+    </div>
+  </DndProvider>
   );
+
 };
 
 export default ProjectBoard;

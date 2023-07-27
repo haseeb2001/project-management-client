@@ -1,0 +1,19 @@
+/* styles.css */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -320px; /* Start from the right side (adjust the width as needed) */
+  width: 320px; /* Adjust the width as needed */
+  height: 100vh;
+  background-color: #333;
+  padding: 20px;
+  z-index: 1000; /* Ensure the sidebar is above other elements */
+  transition: right 0.3s ease; /* Define the slide-in transition */
+  overflow-y: auto; /* Enable vertical scrollbar if the content exceeds the height */
+  /* Set a maximum height for the sidebar to fit in the screen */
+  max-height: 100vh;
+}
+
+.sidebar.open {
+  right: 0; /* Slide the sidebar in to the view */
+}

@@ -4,12 +4,9 @@ import { Formik } from 'formik';
 import Select from 'react-select';
 import '../../css/Sidebar.css';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  createTask,
-  fetchProjectTasks,
-  updateTask,
-} from '../../../store/taskSlice';
+import { createTask, updateTask } from '../../../store/taskSlice';
 import { taskSchema } from '../../../utils/yup/schemas';
+import GravatarAvatar from '../../common/Gravatar';
 
 const AddTask = ({ isOpen, onClose, projectId, task, create }) => {
   const dispatch = useDispatch();
@@ -20,23 +17,29 @@ const AddTask = ({ isOpen, onClose, projectId, task, create }) => {
 
   useEffect(() => {
     if (isOpen) {
-      console.log(projectId)
-      console.log(collabs)
       const projectMembers = collabs?.filter(
         (collab) => collab?.projectId === projectId
       );
-      console.log(projectMembers)
       const userOptions = projectMembers?.map((user) => ({
         value: user?.userId?._id,
-        label: user?.userId?.username,
+        label: (
+          <div className='flex items-center'>
+            <GravatarAvatar
+              key={user?.userId?._id}
+              email={user?.userId?._id}
+              username={user?.userId?.username}
+              size={40}
+            />
+            {user?.userId?.username}
+          </div>
+        ),
       }));
-      console.log('In useEffect', userOptions);
       setOptions(userOptions);
     }
   }, [collabs, projectId, task, create, isOpen]);
 
   const selectedUsers = task?.assigned_to?.map((assignedUserId) => {
-    const selectedUser = options?.find((user) => user.value === assignedUserId);
+    const selectedUser = options?.find((user) => user.value === assignedUserId?._id);
     return selectedUser || null;
   });
 
@@ -48,7 +51,6 @@ const AddTask = ({ isOpen, onClose, projectId, task, create }) => {
     assigned_to: selectedUsers || [],
   };
 
-  console.log(initialValues);
   return (
     <div className={`sidebar ${isOpen ? 'open' : ''} `}>
       <Button onClick={onClose} className='bg-white text-black border-0'>

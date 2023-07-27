@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useDrop } from 'react-dnd';
-import { Task } from './Task';
+import Task from './Task';
 
 export const Column = ({ status, cards, moveCard }) => {
   const [{ isOver }, drop] = useDrop({
@@ -14,18 +14,18 @@ export const Column = ({ status, cards, moveCard }) => {
   });
 
   return (
-    <>
-      <h4 className='mb-2'>{status}</h4>
+    <div className='flex flex-column items-center flex-grow-1 me-3'>
+      <h4 className='mb-2 mt-2 align-items-center'>{status}</h4>
       <div
         ref={drop}
-        className={`flex flex-col w-full items-center p-4 rounded-md
-        ${isOver ? 'bg-gray-100' : cards?.length > 0 ? 'bg-white' : 'bg-black'}
+        className={`p-2 rounded-md flex-grow-1 h-100
+        ${isOver ? 'bg-gray-100' : 'bg-white'}
         `}
       >
         {cards?.map((card) => (
           <Task key={card._id} id={card._id} task={card} />
         ))}
       </div>
-    </>
+    </div>
   );
 };
